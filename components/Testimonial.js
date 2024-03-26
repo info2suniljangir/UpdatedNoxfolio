@@ -25,7 +25,9 @@ export default class Testimonial extends Component {
   render() {
     const userData = this.context;
     const testimonials = userData?.user.testimonials;
-    if (!testimonials) {return ;}
+    if (!testimonials) {
+      return;
+    }
     return (
       <section className="testimonials-area rel z-1">
         <div className="for-bgc-black py-130 rpy-100">
@@ -68,21 +70,23 @@ export default class Testimonial extends Component {
                   className="testimonials-wrap"
                 >
                   {testimonials?.map((testimonial) => {
-                    return (
-                      <div
-                        className="testimonial-item wow fadeInUp delay-0-3s"
-                        key={testimonial._id}
-                      >
-                        <div className="author">
-                          <img src={testimonial.image.url} alt="Author" />
+                    if (testimonial.enabled === true) {
+                      return (
+                        <div
+                          className="testimonial-item wow fadeInUp delay-0-3s"
+                          key={testimonial._id}
+                        >
+                          <div className="author">
+                            <img src={testimonial.image.url} alt="Author" />
+                          </div>
+                          <div className="text">{testimonial.review}</div>
+                          <div className="testi-des">
+                            <h5>{testimonial.name}</h5>
+                            <span>{testimonial.position}</span>
+                          </div>
                         </div>
-                        <div className="text">{testimonial.review}</div>
-                        <div className="testi-des">
-                          <h5>{testimonial.name}</h5>
-                          <span>{testimonial.position}</span>
-                        </div>
-                      </div>
-                    );
+                      );
+                    }
                   })}
                   {/* <div className="testimonial-item wow fadeInUp delay-0-4s">
                     <div className="author">

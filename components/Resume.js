@@ -29,11 +29,14 @@ const Resume = () => {
             </div>
             <div className="resume-items-wrap">
               <div className="row justify-content-between">
-              {/* Number 1 */}
+              <div className="col-xl-5 col-md-6">
+              {/* Education  */}
+              <div className="row">
+              <h4 className="mb-4">Education</h4>
               {userData?.user.timeline.map((item) => {
-                if (item.forEducation === true) {
+                if (item.forEducation === true && item.enabled === true) {
                 return (
-                <div className="col-xl-5 col-md-6" key={item._id}>
+                <div className="col-xl-12 col-md-12" key={item._id}>
                   <div className="resume-item wow fadeInUp delay-0-3s">
                     <div className="icon">
                       <i className="far fa-arrow-right" />
@@ -48,6 +51,36 @@ const Resume = () => {
                 )
                 }
               })}
+              </div>
+              </div>
+              <div className="col-xl-5 col-md-6">
+              {/* Experience */}
+              <div className="row">
+              <h4 className="mb-4">Experience</h4>
+              {userData?.user.timeline.map((item) => {
+                if (item.forEducation === false && item.enabled === true) {
+                return (
+                <div className="col-xl-12 col-md-12" key={item._id}>
+                  <div className="resume-item wow fadeInUp delay-0-3s">
+                    <div className="icon">
+                      <i className="far fa-arrow-right" />
+                    </div>
+                    <div className="content">
+                      <span className="years">{item.startDate.slice(0,10)}  -  {item.endDate.slice(0,10)}</span>
+                      <h4>{item.jobTitle}</h4>
+                      <span className="company">{item.company_name}</span>
+                    </div>
+                  </div>
+                </div>
+                )
+                }
+              })}
+              </div>
+              </div>
+
+              {/* Number 1 */}
+
+
                 {/* <div className="col-xl-5 col-md-6">
                   <div className="resume-item wow fadeInUp delay-0-4s">
                     <div className="icon">

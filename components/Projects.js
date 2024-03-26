@@ -10,16 +10,23 @@ const Projects = () => {
 
   const projects = userData?.user?.projects;
 
-  const items = projects?.map((project) => {
+  const projectItems = projects?.map((project) => {
     return {
-      id: nextId++,
+      id: project.sequence,
       title: project.title,
       desc: project.description,
       img: project.image.url,
+      enabled: project.enabled,
     };
   });
 
-  if (!projects) {return ;}
+  // arranging projects according to their sequence without mutation
+  const items = projectItems?.slice().sort((a, b) => a.id - b.id);
+
+  // eleminate the ui if data is not available
+  if (!projects) {
+    return;
+  }
 
   return (
     <section
@@ -37,38 +44,41 @@ const Projects = () => {
             </div>
           </div>
         </div>
-{/* Projects Mapping */}
+        {/* Projects Mapping */}
         {items?.map((item) => {
-          return (
-            <div
-              className={`row align-items-center pb-25 ${
-                item.id % 2 && "flex-row-reverse"
-              }`}
-              key={item.id}
-            >
-              <div className="col-lg-6">
-                <div className="project-image wow fadeInLeft delay-0-2s">
-                  <img src={item.img} alt="Project" />
+          if (item.enabled === true) {
+  
+            return (
+              <div
+                className={`row align-items-center pb-25 ${
+                  item.id % 2 && "flex-row-reverse"
+                }`}
+                key={item.id}
+              >
+                <div className="col-lg-6">
+                  <div className="project-image wow fadeInLeft delay-0-2s">
+                    <img src={item.img} alt="Project" />
+                  </div>
                 </div>
-              </div>
-              <div className="col-xl-5 col-lg-6">
-                <div className="project-content wow fadeInRight delay-0-2s">
-                  <span className="sub-title">Product Design</span>
-                  <h2>
-                    <Link legacyBehavior href="project-details">
-                      {item.title}
+                <div className="col-xl-5 col-lg-6">
+                  <div className="project-content wow fadeInRight delay-0-2s">
+                    <span className="sub-title">Product Design</span>
+                    <h2>
+                      <Link legacyBehavior href="project-details">
+                        {item.title}
+                      </Link>
+                    </h2>
+                    <p>{item.desc}</p>
+                    <Link legacyBehavior href="/project-details">
+                      <a className="details-btn">
+                        <i className="far fa-arrow-right" />
+                      </a>
                     </Link>
-                  </h2>
-                  <p>{item.desc}</p>
-                  <Link legacyBehavior href="/project-details">
-                    <a className="details-btn">
-                      <i className="far fa-arrow-right" />
-                    </a>
-                  </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
+            );                   
+          }
         })}
         {/* number 2 */}
         {/* <div className="row align-items-center pb-25">

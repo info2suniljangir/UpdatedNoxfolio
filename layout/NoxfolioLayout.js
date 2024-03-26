@@ -4,9 +4,21 @@ import { useEffect, useState, createContext } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import SideBar from "./SideBar";
-import { getData } from "@/data/data";
 
 export const UserContext = createContext();
+
+
+async function getData() {
+  const apiUrl =
+    "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae";
+  const res = await fetch(apiUrl);
+  if (!res.ok) {
+    throw new Error(res);
+  }
+
+  return res.json();
+}
+
 
 const NoxfolioLayout = ({
   children,
@@ -17,6 +29,8 @@ const NoxfolioLayout = ({
 }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,8 +48,8 @@ const NoxfolioLayout = ({
   }, []);
 
   // if data is not available or loading
-  if (loading) return <p>Loading...</p>
-  if (!userData) return <p>No profile data</p>
+  // if (loading) return <p>Loading...</p>
+  // if (!userData) return <p>No profile data</p>
 
   return (
     <div className="page-wrapper">

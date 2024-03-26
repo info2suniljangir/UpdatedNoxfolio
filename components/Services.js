@@ -14,7 +14,13 @@ const Services = ({ extraClass }) => {
   }
 
   const services = userData?.user.services.map((service) => {
-    return { id: nextId++, title: service.name, text: service.desc };
+    return {
+      id: nextId++,
+      title: service.name,
+      text: service.desc,
+      charge: service.charge,
+      enabled: service.enabled,
+    };
   });
 
   return (
@@ -34,8 +40,10 @@ const Services = ({ extraClass }) => {
           </div>
         </div>
         <div className="row">
-          {services?.map((service) => (
-            <div className="col-lg-6" key={service.id}>
+          {services?.map((service) => {
+            if (service.enabled === true) {
+            return (
+              <div className="col-lg-6" key={service.id}>
               <div className="service-item wow fadeInUp delay-0-2s">
                 <div className="number">
                   {service.id >= 9 ? service.id : `0${service.id}`}.
@@ -43,6 +51,7 @@ const Services = ({ extraClass }) => {
                 <div className="content">
                   <h4>{service.title}</h4>
                   <p>{service.text}</p>
+                  <p>{service.charge}</p>
                 </div>
                 <Link legacyBehavior href="/#">
                   <a className="details-btn">
@@ -51,7 +60,9 @@ const Services = ({ extraClass }) => {
                 </Link>
               </div>
             </div>
-          ))}
+          );
+        }
+          })}
         </div>
       </div>
       <div className="bg-lines">

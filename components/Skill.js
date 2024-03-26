@@ -5,15 +5,21 @@ import { useContext } from "react";
 const Skill = () => {
   const userData = useContext(UserContext);
 
-  if (!userData?.user?.skills) {return ;}
-  const items = userData?.user.skills.map((skill) => {
+  if (!userData?.user?.skills) {
+    return;
+  }
+  const skillItems = userData?.user.skills.map((skill) => {
     return {
-      id: skill._id,
+      id: skill.sequence,
       name: skill.name,
       image: skill.image.url,
       value: skill.percentage,
+      enabled: skill.enabled,
     };
+
+    // arranging the skill items in sequence
   });
+  const items = skillItems?.slice().sort((a, b) => a.id - b.id);
   return (
     <section id="skills" className="skill-area rel z-1">
       <div className="for-bgc-black pt-130 rpt-100 pb-100 rpb-70">
@@ -42,15 +48,22 @@ const Skill = () => {
             <div className="col-lg-7">
               <div className="skill-items-wrap">
                 <div className="row">
-                  {items?.map((item) => (
-                    <div className="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6" key={item.id}>
-                      <div className="skill-item wow fadeInUp delay-0-2s">
-                        <img src={item.image} alt="Skill" />
-                        <h5>{item.name}</h5>
-                        <span className="percent">{item.value}%</span>
-                      </div>
-                    </div>
-                  ))}
+                  {items?.map((item) => {
+                    if (item.enabled === true) {
+                      return (
+                        <div
+                          className="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6"
+                          key={item.id}
+                        >
+                          <div className="skill-item wow fadeInUp delay-0-2s">
+                            <img src={item.image} alt="Skill" />
+                            <h5>{item.name}</h5>
+                            <span className="percent">{item.value}%</span>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>
@@ -75,10 +88,11 @@ const Skill = () => {
 export default Skill;
 
 export const Skill2 = () => {
-
   const userData = useContext(UserContext);
 
-  if (!userData?.user?.skills) {return ;}
+  if (!userData?.user?.skills) {
+    return;
+  }
   const items = userData?.user.skills.map((skill) => {
     return {
       id: skill._id,

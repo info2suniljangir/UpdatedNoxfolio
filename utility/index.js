@@ -3,7 +3,7 @@ export const noxfolioUtilits = {
     if (typeof window !== "undefined") {
       window.WOW = require("wowjs");
     }
-    new WOW.WOW().init();
+    new WOW.WOW({ live: false }).init();
   },
   stickyNav() {
     window.addEventListener("scroll", () => {

@@ -15,17 +15,17 @@ const Hero = () => {
   
   useEffect(() => {
       const fetchData = () => {
-      setCounterData((prevData) => {
-        return [
+        if (userData?.success === true) {
+      setCounterData((prevData) => [
           { ...prevData[0], value: userData?.user.about.exp_year },
           { ...prevData[1] },
           { ...prevData[2], value: userData?.user.about.some_total },
-        ];
-      }
+      ]
           );
+    }
     };
     fetchData();
-  }, []);
+  }, [userData]);
 
   if (!userData) { return ;}
 
